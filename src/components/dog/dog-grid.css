@@ -1,0 +1,125 @@
+/* DoG grid — sonar-trace of specimens descending */
+.dog-sonar {
+  position: relative;
+  padding-left: 80px;
+}
+.dog-sonar::before {
+  /* central depth axis */
+  content: '';
+  position: absolute;
+  left: 40px; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--border) 0%, var(--rust) 20%, var(--border) 80%, transparent 100%);
+}
+
+.dog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 26px;
+}
+.dog-tile {
+  position: relative;
+  aspect-ratio: 4/5;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s var(--ease-sink), border-color 0.4s;
+}
+.dog-tile::before {
+  /* specimen lume dot */
+  content: '';
+  position: absolute;
+  top: -4px; left: 14px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--lume);
+  box-shadow: 0 0 14px var(--lume);
+}
+.dog-tile:hover {
+  transform: translateY(-6px);
+  border-color: var(--lume);
+}
+.dog-tile:hover .dog-slot iframe { filter: none; }
+
+.dog-tile-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  border-bottom: 1px dashed var(--border-faint);
+}
+.dog-tile-head .depth { color: var(--rust); }
+
+.dog-slot {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+.dog-slot iframe {
+  width: 100%; height: 100%;
+  border: 0;
+  pointer-events: none;
+  filter: saturate(0.72);
+  transition: filter 0.5s var(--ease-sink);
+}
+.dog-slot span,
+.dog-slot img {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--fg-faint);
+  text-transform: uppercase;
+}
+.dog-slot img { object-fit: cover; width: 100%; height: 100%; }
+
+.dog-tile-foot {
+  padding: 14px 16px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 10px;
+  border-top: 1px solid var(--border-faint);
+}
+.dog-tile-foot .t {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 70, "opsz" 72, "wght" 400;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--fg);
+}
+.dog-tile-foot .tech {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+/* Filter chrome — hidden behind feature flag */
+.dog-filters {
+  display: none;
+  gap: 10px;
+  margin: 16px 0;
+}
+.dog-filters[data-flag="1"] { display: flex; }
+.dog-filters button {
+  background: transparent;
+  color: var(--fg-muted);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}

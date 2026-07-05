@@ -1,0 +1,22 @@
+---
+import { buyLinkState } from './buy-link-state';
+interface Props { buy_enabled: boolean; marketplace_url: string; }
+const s = buyLinkState(Astro.props);
+---
+{s.state === 'live' && <a class="buy live" href={s.url} target="_blank" rel="noopener">Collect →</a>}
+{s.state === 'coming-soon' && <span class="buy soon">coming soon</span>}
+{s.state === 'disabled' && null}
+
+<style>
+  .buy {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 6px 10px;
+    text-decoration: none;
+  }
+  .live { border: 1px solid var(--glitch-mag); color: var(--glitch-mag); }
+  .live:hover { background: var(--glitch-mag); color: var(--bg); }
+  .soon { color: var(--fg-muted); border: 1px dashed var(--border); padding: 6px 10px; }
+</style>

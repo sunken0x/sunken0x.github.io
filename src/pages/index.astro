@@ -1,0 +1,355 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/site-chrome/Header.astro";
+import Footer from "../components/site-chrome/Footer.astro";
+import { getCollection } from "astro:content";
+
+const featured = (await getCollection('pieces', (p: any) => p.data.featured))
+  .sort((a: any, b: any) => (a.data.featured_order ?? 999) - (b.data.featured_order ?? 999))
+  .slice(0, 6);
+
+const allPieces = await getCollection('pieces');
+const surfaceSamples = allPieces.slice(0, 6);
+
+const showing = featured.length > 0 ? featured : surfaceSamples;
+
+const collections = [
+  { slug: 'depths-of-glitch', name: 'Depths of Glitch', depth: '−2300m', count: allPieces.filter((p: any) => p.data.collection === 'depths-of-glitch').length, note: '29 specimens · generative' },
+  { slug: 'murky-depths',     name: 'Murky Depths',     depth: '−0870m', count: allPieces.filter((p: any) => p.data.collection === 'murky-depths').length,    note: 'editions · 1/1 on SuperRare' },
+  { slug: 'glitch-maps',      name: 'Glitch Maps',      depth: '−0260m', count: allPieces.filter((p: any) => p.data.collection === 'glitch-maps').length,     note: '256.art · ethereum' },
+  { slug: 'lurkers',          name: 'Lurkers',          depth: '−0090m', count: allPieces.filter((p: any) => p.data.collection === 'lurkers').length,         note: 'PFP series · ordinals' },
+  { slug: 'orange-editions',  name: 'Orange Editions',  depth: '−0030m', count: allPieces.filter((p: any) => p.data.collection === 'orange-editions').length, note: 'warm spectrum' },
+];
+---
+<BaseLayout title="sunken0x · log book">
+  <Header />
+
+  <!-- SURFACE — hero  -->
+  <section class="surface">
+    <div class="coord readout sink sink-1">0m · surface</div>
+    <h1 class="sink sink-2">
+      <span class="display display-loose line-1">a field guide</span>
+      <span class="display display-dense line-2">to what sunk</span>
+    </h1>
+
+    <p class="lede sink sink-3">
+      <em>Records pulled from under the signal.</em> The work of
+      <span class="attrib">sunken0x</span> — glitch native, fully generative,
+      catalogued by depth rather than by date.
+    </p>
+
+    <div class="surface-actions sink sink-4">
+      <a href="/depths-of-glitch" class="dive" data-hover>
+        <span class="dive-label">Descend →</span>
+        <span class="dive-sub">29 specimens · Depths of Glitch</span>
+      </a>
+      <div class="surface-meta">
+        <p class="readout">Conditions</p>
+        <p class="meta-val">low visibility · current N·NE</p>
+      </div>
+    </div>
+
+    <div class="scroll-hint sink sink-5">
+      <span class="readout">scroll to descend</span>
+      <span class="line"></span>
+    </div>
+  </section>
+
+  <!-- FIRST DEPTH — featured specimens -->
+  <section class="deck">
+    <header class="deck-head">
+      <div>
+        <p class="readout">Station 01 · surfaced today</p>
+        <h2 class="display display-dense">Recent catches</h2>
+      </div>
+      <a href="/works" class="deck-link" data-hover>see the full manifest <span class="arr">→</span></a>
+    </header>
+
+    <div class="catch-grid">
+      {showing.map((p: any, i: number) => {
+        const depth = 100 + i * 310;
+        const href = p.data.collection === 'depths-of-glitch'
+          ? `/depths-of-glitch/${p.data.slug}`
+          : `/${p.data.collection}`;
+        return (
+          <a href={href} class="catch specimen" data-hover>
+            <div class="tag-top">
+              <span>−{String(depth).padStart(4, '0')}m</span>
+              <span>№ {String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <div class="catch-embed">
+              {p.data.live_source
+                ? <iframe src={p.data.live_source} loading="lazy" sandbox="allow-scripts" title={p.data.title}></iframe>
+                : <div class="catch-blank">specimen in transit</div>
+              }
+            </div>
+            <div class="tag-body">
+              <h3>{p.data.title}</h3>
+              <p class="latin">{p.data.collection.replaceAll('-', ' ')}</p>
+              {p.data.notes && <p class="notes">{p.data.notes.slice(0, 120)}</p>}
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- TRENCH — collections  -->
+  <section class="trench">
+    <div class="depth-marker">
+      <span class="tick">−1500m</span>
+      <div class="rule"></div>
+      <span>collections · by depth</span>
+    </div>
+
+    <ul class="trench-list">
+      {collections.map((c) => (
+        <li>
+          <a href={`/${c.slug}`} data-hover>
+            <span class="depth-num">{c.depth}</span>
+            <span class="c-name display">{c.name}</span>
+            <span class="c-note">{c.note}</span>
+            <span class="c-count">{c.count} <em>pcs</em></span>
+            <span class="c-arr">↓</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <Footer />
+
+</BaseLayout>
+
+<style>
+  .surface {
+    min-height: 86vh;
+    padding: 60px 40px 80px;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 20px;
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .coord { align-self: start; padding-top: 8px; }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(60px, 12vw, 200px);
+    color: var(--fg);
+    line-height: 0.88;
+  }
+  .line-1 {
+    display: block;
+    color: var(--fg-warm);
+    font-style: italic;
+    font-variation-settings: "SOFT" 100, "opsz" 144, "wght" 300;
+    letter-spacing: -0.015em;
+    font-size: 0.52em;
+  }
+  .line-2 {
+    display: block;
+    margin-top: 6px;
+    color: var(--fg);
+  }
+
+  .lede {
+    max-width: 52ch;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--fg-warm);
+    margin: 20px 0 0;
+  }
+  .lede em { color: var(--lume); font-style: italic; }
+  .attrib {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg);
+    background: var(--bg-elev);
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    margin: 0 4px;
+    vertical-align: 2px;
+  }
+
+  .surface-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-top: 28px;
+  }
+  .dive {
+    display: block;
+    padding: 18px 24px;
+    border: 1px solid var(--lume);
+    color: var(--fg);
+    text-decoration: none;
+    max-width: 360px;
+    transition: background 0.4s var(--ease-sink);
+  }
+  .dive:hover { background: var(--lume); color: var(--bg-deep); }
+  .dive:hover .dive-sub { color: var(--bg-deep); }
+  .dive-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-variation-settings: "SOFT" 60, "opsz" 144, "wght" 400;
+  }
+  .dive-sub {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-top: 6px;
+  }
+  .surface-meta { text-align: right; }
+  .surface-meta .meta-val { font-family: var(--font-body); font-style: italic; color: var(--fg); font-size: 16px; margin: 4px 0 0; }
+
+  .scroll-hint {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: center;
+    color: var(--fg-faint);
+    margin-top: 36px;
+  }
+  .scroll-hint .line {
+    height: 1px;
+    background: linear-gradient(90deg, var(--fg-faint), transparent);
+    animation: pulse-line 3s var(--ease-sink) infinite;
+  }
+  @keyframes pulse-line { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* DECK — the first station below surface */
+  .deck {
+    padding: 80px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .deck-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 40px;
+    border-top: 1px solid var(--border-faint);
+    padding-top: 28px;
+  }
+  .deck-head h2 {
+    font-size: clamp(40px, 5vw, 72px);
+    margin: 6px 0 0;
+    color: var(--fg);
+  }
+  .deck-link {
+    font-family: var(--font-body); font-style: italic;
+    font-size: 16px;
+    color: var(--fg-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .deck-link:hover { color: var(--lume); border-color: var(--lume); }
+  .deck-link .arr { margin-left: 6px; font-family: var(--font-mono); font-style: normal; }
+
+  .catch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .catch {
+    text-decoration: none;
+    color: var(--fg);
+    transition: transform 0.6s var(--ease-sink), border-color 0.4s;
+  }
+  .catch:hover { transform: translateY(-4px); border-color: var(--lume); }
+  .catch-embed {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border-faint);
+    border-bottom: 1px solid var(--border-faint);
+  }
+  .catch-embed iframe { width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .catch-blank {
+    display: grid; place-items: center;
+    width: 100%; height: 100%;
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  /* TRENCH — collections as a vertical descent list */
+  .trench {
+    padding: 40px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .trench-list {
+    list-style: none; padding: 0; margin: 0;
+    border-top: 1px solid var(--border-faint);
+  }
+  .trench-list li { border-bottom: 1px solid var(--border-faint); }
+  .trench-list a {
+    display: grid;
+    grid-template-columns: 120px 1fr 1.4fr auto 40px;
+    align-items: baseline;
+    gap: 24px;
+    padding: 26px 4px;
+    text-decoration: none;
+    color: var(--fg);
+    transition: background 0.4s var(--ease-sink), padding 0.4s var(--ease-sink);
+  }
+  .trench-list a:hover {
+    background: var(--bg-elev);
+    padding-left: 20px;
+  }
+  .trench-list a:hover .c-arr { color: var(--lume); transform: translateY(6px); }
+  .depth-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--rust);
+  }
+  .c-name {
+    font-size: clamp(28px, 3.2vw, 48px);
+    line-height: 1;
+    color: var(--fg);
+    font-variation-settings: "SOFT" 80, "opsz" 144, "wght" 400;
+  }
+  .c-note {
+    font-family: var(--font-body); font-style: italic;
+    color: var(--fg-muted); font-size: 15px;
+  }
+  .c-count { font-family: var(--font-mono); font-size: 12px; color: var(--fg-warm); }
+  .c-count em { font-style: normal; color: var(--fg-faint); font-size: 10px; letter-spacing: 0.16em; }
+  .c-arr {
+    font-family: var(--font-mono);
+    color: var(--fg-faint);
+    text-align: right;
+    transition: color 0.4s var(--ease-sink), transform 0.4s var(--ease-sink);
+  }
+
+  @media (max-width: 860px) {
+    .surface { padding: 30px 22px 60px; min-height: 70vh; }
+    .surface-actions { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .surface-meta { text-align: left; }
+    .deck, .trench { padding-left: 22px; padding-right: 22px; }
+    .deck-head { flex-direction: column; align-items: flex-start; }
+    .trench-list a {
+      grid-template-columns: 80px 1fr;
+      gap: 10px;
+    }
+    .trench-list .c-note,
+    .trench-list .c-count,
+    .trench-list .c-arr { grid-column: 1 / -1; padding-left: 90px; margin-top: -8px; }
+  }
+</style>

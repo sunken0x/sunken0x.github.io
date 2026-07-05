@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/site-chrome/Header.astro";
+import Footer from "../components/site-chrome/Footer.astro";
+import { getEntry, render } from "astro:content";
+const entry = await getEntry('writing', 'press');
+if (!entry) throw new Error('writing/press.md missing');
+const { Content } = await render(entry);
+---
+<BaseLayout title="Press — sunken0x">
+  <Header />
+  <main class="log">
+    <p class="readout sink sink-1">Station 09 · press</p>
+    <h1 class="display display-dense sink sink-2">Press</h1>
+    <p class="log-sub sink sink-3"><em>Selected exhibitions, press, collectors of note.</em></p>
+    <div class="depth-marker sink sink-4">
+      <span class="tick">−0010m</span>
+      <div class="rule"></div>
+      <span>entry ↓</span>
+    </div>
+    <article class="log-body sink sink-5">
+      <Content />
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .log {
+    padding: 40px 40px 80px;
+    max-width: 72ch;
+    margin: 0 auto;
+  }
+  .log h1 {
+    margin: 8px 0 10px;
+    font-size: clamp(60px, 9vw, 140px);
+    color: var(--fg);
+  }
+  .log-sub {
+    color: var(--fg-warm);
+    font-size: 19px;
+    margin: 0 0 28px;
+  }
+  .log-body {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+  .log-body :global(p) { margin: 0 0 1.2em; }
+  .log-body :global(a) {
+    color: var(--lume);
+    text-decoration: none;
+    border-bottom: 1px solid var(--lume-dim);
+  }
+  @media (max-width: 860px) {
+    .log { padding: 20px 22px 40px; }
+  }
+</style>

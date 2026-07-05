@@ -1,0 +1,110 @@
+---
+// Vessel-manifest style header. The zero is a sonar ping.
+const now = new Date();
+const coords = "52°28'N • 002°01'W";  // manifest-style placeholder coords
+---
+<header class="site-header">
+  <a href="/" class="mark" aria-label="sunken0x — home">
+    <span class="mark-prefix">sunken</span><span class="sonar" data-egg="0"></span><span class="mark-suffix">x</span>
+  </a>
+  <div class="manifest">
+    <div class="manifest-row">
+      <span class="label">vessel</span><span class="value">sunken0x</span>
+    </div>
+    <div class="manifest-row">
+      <span class="label">coords</span><span class="value">{coords}</span>
+    </div>
+    <div class="manifest-row">
+      <span class="label">log</span><span class="value">{now.toISOString().slice(0,10)}</span>
+    </div>
+  </div>
+  <nav>
+    <a href="/depths-of-glitch"><span class="n-num">01</span>Depths of Glitch</a>
+    <a href="/works"><span class="n-num">02</span>Manifest</a>
+    <a href="/about"><span class="n-num">03</span>Log Book</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: flex-start;
+    gap: 48px;
+    padding: 28px 40px 20px;
+    position: relative;
+    z-index: 10;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    left: 40px; right: 40px; bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  }
+
+  .mark {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100, "opsz" 144, "wght" 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+    text-decoration: none;
+    line-height: 1;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .mark-prefix, .mark-suffix { display: inline-block; }
+  .mark:hover .sonar { color: var(--lume); }
+
+  .manifest {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 0 24px;
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .manifest-row { display: flex; flex-direction: column; gap: 2px; }
+  .manifest .label { color: var(--fg-faint); }
+  .manifest .value { color: var(--fg-warm); letter-spacing: 0.1em; }
+
+  nav {
+    display: flex; gap: 24px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 15px;
+  }
+  nav a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  nav a:hover { color: var(--fg); }
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: 0;
+    height: 1px;
+    background: var(--lume);
+    transition: right 0.4s var(--ease-sink);
+  }
+  nav a:hover::after { right: 0; }
+  .n-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--rust);
+    margin-right: 8px;
+    font-style: normal;
+    vertical-align: 0.2em;
+  }
+
+  @media (max-width: 860px) {
+    .site-header { grid-template-columns: 1fr; gap: 18px; padding: 20px 22px; }
+    .manifest { grid-template-columns: repeat(3, 1fr); gap: 0 12px; }
+  }
+</style>

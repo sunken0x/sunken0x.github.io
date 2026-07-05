@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/site-chrome/Header.astro";
+import Footer from "../components/site-chrome/Footer.astro";
+import WorksFilter from "../components/works/WorksFilter.tsx";
+import { getCollection } from "astro:content";
+const items = (await getCollection('pieces')).map((p: any) => ({
+  slug: p.data.slug,
+  title: p.data.title,
+  collection: p.data.collection,
+  chain: p.data.chain,
+  technique: p.data.technique,
+}));
+---
+<BaseLayout title="Manifest — sunken0x">
+  <Header />
+  <main class="works-page">
+    <p class="readout sink sink-1">Station 02 · manifest</p>
+    <h1 class="display display-dense sink sink-2">Manifest</h1>
+    <p class="works-sub sink sink-3"><em>Every specimen logged — filterable by station, chain, and capture technique.</em></p>
+    <div class="depth-marker sink sink-4">
+      <span class="tick">−0000m</span>
+      <div class="rule"></div>
+      <span>{items.length} specimens</span>
+    </div>
+    <WorksFilter items={items} client:load />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  .works-page {
+    padding: 40px 40px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .works-page h1 {
+    margin: 8px 0 10px;
+    font-size: clamp(56px, 9vw, 140px);
+    color: var(--fg);
+  }
+  .works-sub { color: var(--fg-warm); font-size: 19px; margin: 0 0 28px; max-width: 58ch; }
+
+  .works { margin-top: 20px; }
+  .filters { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+  .filters select {
+    background: var(--bg-elev); color: var(--fg);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .filters select:focus { outline: 1px solid var(--lume); }
+
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .work {
+    padding: 18px 20px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    text-decoration: none;
+    transition: border-color 0.4s, transform 0.4s var(--ease-sink);
+    position: relative;
+  }
+  .work::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 10px;
+    width: 5px; height: 5px;
+    background: var(--lume);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--lume);
+    opacity: 0.7;
+  }
+  .work:hover { border-color: var(--lume); transform: translateY(-3px); }
+  .work .title {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 70, "opsz" 72, "wght" 400;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    margin-top: 6px;
+  }
+  .work .sub {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin-top: 8px;
+  }
+  @media (max-width: 860px) {
+    .works-page { padding: 20px 22px 40px; }
+  }
+</style>

@@ -1,0 +1,194 @@
+/* ===== Fonts: served from Google Fonts, self-host later ===== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,200..900,0..100;1,9..144,200..900,0..100&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+/* ===== Typography primitives ===== */
+.display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 40, "opsz" 144, "wght" 400;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+.display-loose {
+  font-variation-settings: "SOFT" 90, "opsz" 144, "wght" 300;
+}
+.display-dense {
+  font-variation-settings: "SOFT" 0, "opsz" 144, "wght" 700;
+  letter-spacing: -0.04em;
+}
+
+.editorial {
+  font-family: var(--font-body);
+  font-style: italic;
+}
+
+.readout {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* ===== Depth marker — replaces the old "GlitchDivider" ===== */
+.depth-marker {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  color: var(--fg-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--border-faint);
+}
+.depth-marker .rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+}
+.depth-marker .tick {
+  color: var(--rust);
+}
+
+/* ===== Surfaced text — for the wordmark, headings. Replaces chromatic aberration. ===== */
+.surfaced {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100, "opsz" 144, "wght" 300;
+  color: var(--fg);
+  letter-spacing: -0.03em;
+  position: relative;
+}
+.surfaced::before {
+  content: attr(data-ghost);
+  position: absolute;
+  left: 0; top: 0;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--brine);
+  opacity: 0.3;
+  transform: translate(0, 2px);
+  pointer-events: none;
+}
+
+/* ===== Sonar ping — the 0 in sunken0x ===== */
+.sonar {
+  display: inline-block;
+  position: relative;
+  width: 0.82em;
+  height: 0.82em;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  vertical-align: -0.05em;
+  margin: 0 0.04em;
+}
+.sonar::before,
+.sonar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--lume);
+  opacity: 0;
+  animation: sonar-ping 3.2s var(--ease-sink) infinite;
+}
+.sonar::after { animation-delay: 1.6s; }
+@keyframes sonar-ping {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  80%  { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* ===== Specimen tag — reusable card ===== */
+.specimen {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  position: relative;
+}
+.specimen::before {
+  content: '';
+  position: absolute;
+  top: 10px; left: 10px;
+  width: 6px; height: 6px;
+  background: var(--lume);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--lume);
+}
+.specimen .tag-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 18px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  border-bottom: 1px dashed var(--border-faint);
+}
+.specimen .tag-body { padding: 16px 18px 18px; }
+.specimen h3 {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 60, "opsz" 48, "wght" 400;
+  font-size: 26px;
+  line-height: 1;
+  margin: 0 0 6px;
+  color: var(--fg);
+}
+.specimen .latin {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--fg-warm);
+  opacity: 0.8;
+}
+.specimen .notes {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--fg-muted);
+  max-width: 40ch;
+}
+
+/* ===== Custom cursor — a divelight dot with a wake ===== */
+.cursor-dot, .cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--lume);
+  box-shadow: 0 0 12px var(--lume);
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s linear;
+}
+.cursor-ring {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--lume);
+  opacity: 0.6;
+  transform: translate(-50%, -50%);
+  transition: transform 0.28s var(--ease-sink), opacity 0.2s, width 0.2s, height 0.2s;
+  mix-blend-mode: screen;
+}
+.cursor-ring.hover { width: 56px; height: 56px; opacity: 0.9; border-color: var(--lume); }
+
+/* ===== Page-load sink animation ===== */
+@keyframes sink-in {
+  from { opacity: 0; transform: translateY(12px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.sink { animation: sink-in 0.9s var(--ease-sink) both; }
+.sink-1 { animation-delay: 0.1s; }
+.sink-2 { animation-delay: 0.25s; }
+.sink-3 { animation-delay: 0.4s; }
+.sink-4 { animation-delay: 0.55s; }
+.sink-5 { animation-delay: 0.7s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sonar::before, .sonar::after { animation: none; }
+  .sink { animation: none; }
+}

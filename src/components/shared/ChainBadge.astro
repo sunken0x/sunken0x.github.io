@@ -1,0 +1,20 @@
+---
+import { chainBadgeProps, type Chain } from './chain-badge-renderer';
+interface Props { chain: Chain; }
+const { chain } = Astro.props;
+const { label, color } = chainBadgeProps(chain);
+---
+<span class="chain-badge" style={`--badge: ${color}`}>{label}</span>
+
+<style>
+  .chain-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border: 1px solid var(--badge);
+    color: var(--badge);
+    border-radius: 2px;
+  }
+</style>

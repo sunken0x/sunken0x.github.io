@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DogImmersive from "../../components/dog/DogImmersive.tsx";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const all = (await getCollection('pieces', (p: any) => p.data.collection === 'depths-of-glitch'))
+    .sort((a: any, b: any) => (a.data.date > b.data.date ? -1 : 1));
+  return all.map((p: any, i: number) => ({
+    params: { slug: p.data.slug },
+    props: {
+      piece: {
+        slug: p.data.slug,
+        title: p.data.title,
+        live_source: p.data.live_source,
+        notes: p.data.notes,
+        marketplace_url: p.data.marketplace_url,
+        buy_enabled: p.data.buy_enabled,
+      },
+      prevSlug: all[i - 1]?.data.slug ?? null,
+      nextSlug: all[i + 1]?.data.slug ?? null,
+    },
+  }));
+}
+
+const { piece, prevSlug, nextSlug } = Astro.props;
+---
+<BaseLayout title={`${piece.title} — sunken0x`}>
+  <DogImmersive piece={piece} prevSlug={prevSlug} nextSlug={nextSlug} client:load />
+</BaseLayout>
+
+<style is:global>
+  body { overflow: hidden; }
+  .immersive { position: fixed; inset: 0; background: var(--bg); }
+  .immersive .full { width: 100%; height: 100%; border: 0; }
+  .overlay {
+    position: absolute; left: 24px; bottom: 24px; max-width: 40ch;
+    padding: 14px 18px; background: rgba(0,0,0,0.7); border: 1px solid var(--border);
+  }
+  .overlay h2 { margin: 0; font-family: var(--font-mono); letter-spacing: 2px; }
+  .overlay p { font-size: 13px; color: var(--fg-muted); }
+  .overlay a { color: var(--glitch-mag); font-family: var(--font-mono); font-size: 12px; margin-right: 14px; }
+  .overlay .close { color: var(--fg-muted); }
+</style>

@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/site-chrome/Header.astro";
+import Footer from "../components/site-chrome/Footer.astro";
+import DogGrid from "../components/dog/DogGrid.tsx";
+import "../components/dog/dog-grid.css";
+import { getCollection } from "astro:content";
+
+const pieces = (await getCollection('pieces', (p: any) => p.data.collection === 'depths-of-glitch'))
+  .sort((a: any, b: any) => {
+    // preserve file-order by slug-number prefix if possible
+    const an = parseInt(a.id?.match(/\d+/)?.[0] ?? '0', 10);
+    const bn = parseInt(b.id?.match(/\d+/)?.[0] ?? '0', 10);
+    return an - bn;
+  })
+  .map((p: any) => ({
+    slug: p.data.slug,
+    title: p.data.title,
+    live_source: p.data.live_source,
+    thumbnail: p.data.thumbnail,
+    technique: p.data.technique,
+  }));
+---
+<BaseLayout title="Depths of Glitch — sunken0x">
+  <Header />
+  <main class="dog-page">
+
+    <section class="dog-hero">
+      <p class="readout sink sink-1">Station 02 · depths of glitch</p>
+      <h1 class="sink sink-2">
+        <span class="display display-loose">what the sonar</span>
+        <span class="display display-dense">caught below</span>
+      </h1>
+      <p class="dog-lede sink sink-3">
+        {pieces.length} specimens from the <em>Depths of Glitch</em> collection.
+        Each one generative, fully self-contained, pulled up from
+        <span class="depth-chip">−0800m</span> to <span class="depth-chip">−4300m</span>.
+        Hover to awaken. Click to descend.
+      </p>
+
+      <div class="depth-marker sink sink-4">
+        <span class="tick">−0800m</span>
+        <div class="rule"></div>
+        <span>specimens ↓</span>
+      </div>
+    </section>
+
+    {/*
+      Filter markup ships hidden behind data-flag="0". Follow-up to wire into
+      DogGrid state once the taxonomy is confirmed.
+    */}
+    <div class="dog-filters" data-flag="0">
+      <button type="button">all</button>
+      <button type="button">p5</button>
+      <button type="button">three.js</button>
+      <button type="button">mixed</button>
+    </div>
+
+    <div class="dog-sonar">
+      <DogGrid pieces={pieces} client:visible />
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .dog-page {
+    padding: 40px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .dog-hero {
+    padding: 40px 0 60px;
+  }
+  .dog-hero h1 {
+    margin: 12px 0 28px;
+    font-size: clamp(50px, 8vw, 130px);
+    line-height: 0.9;
+    color: var(--fg);
+  }
+  .dog-hero h1 .display-loose {
+    display: block;
+    color: var(--fg-warm);
+    font-style: italic;
+    font-size: 0.48em;
+  }
+  .dog-hero h1 .display-dense { display: block; margin-top: 4px; }
+  .dog-lede {
+    max-width: 60ch;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--fg-warm);
+  }
+  .dog-lede em { color: var(--lume); }
+  .depth-chip {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--rust);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    margin: 0 2px;
+    vertical-align: 2px;
+  }
+
+  @media (max-width: 860px) {
+    .dog-page { padding: 20px 22px 40px; }
+    .dog-hero { padding: 20px 0 36px; }
+    .dog-sonar { padding-left: 24px !important; }
+    .dog-sonar::before { left: 10px !important; }
+  }
+</style>

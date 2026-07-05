@@ -1,0 +1,119 @@
+---
+// Ship's log footer. Outbound links as a manifest.
+const destinations = [
+  { code: 'SR',  label: 'SuperRare',     href: 'https://superrare.com/sunken0x', note: 'canonical vault' },
+  { code: 'TL',  label: 'Transient Labs', href: 'https://transientlabs.xyz',       note: 'Depths of Glitch' },
+  { code: 'OBJ', label: 'objkt',          href: 'https://objkt.com/users/sunken0x/created', note: 'Tezos' },
+  { code: 'MFD', label: 'Manifold',       href: 'https://manifold.xyz/@sunken0x',  note: '' },
+  { code: 'BTC', label: 'Ordinals',       href: 'https://ord.net/collection/orangehaze', note: '' },
+  { code: 'X',   label: 'X',              href: 'https://x.com/sunken0x',          note: '' },
+  { code: 'IG',  label: 'Instagram',      href: 'https://instagram.com/sunken0x',  note: '' },
+  { code: 'MED', label: 'Medium',         href: 'https://medium.com/@sunken0x',    note: '' },
+];
+---
+<footer class="site-footer">
+  <div class="depth-marker">
+    <span class="tick">−∞</span>
+    <div class="rule"></div>
+    <span>end of log</span>
+  </div>
+
+  <div class="footer-grid">
+    <div class="footer-title">
+      <p class="readout">Manifest</p>
+      <h4 class="display display-loose">Departures</h4>
+    </div>
+    <ul class="destinations">
+      {destinations.map((d) => (
+        <li>
+          <span class="dcode">{d.code}</span>
+          {d.href
+            ? <a href={d.href} target="_blank" rel="noopener">{d.label}</a>
+            : <span class="dline">{d.label}</span>
+          }
+          {d.note && <span class="dnote">· {d.note}</span>}
+        </li>
+      ))}
+    </ul>
+    <div class="colophon">
+      <p class="readout">Colophon</p>
+      <p>
+        Logged from the foredeck. Typeset in <em>Fraunces</em>, <em>Instrument Serif</em>,
+        and <em>IBM Plex Mono</em>. No tracking. No newsletter.
+      </p>
+      <p class="readout sig">© sunken0x · all specimens catalogued</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: 0 40px 80px;
+    margin-top: 120px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 48px;
+    padding-top: 36px;
+  }
+  .footer-title h4 {
+    font-size: 38px;
+    margin: 4px 0 0;
+    color: var(--fg);
+  }
+  .destinations {
+    list-style: none; padding: 0; margin: 0;
+    columns: 2;
+    column-gap: 40px;
+  }
+  .destinations li {
+    break-inside: avoid;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-faint);
+    display: grid;
+    grid-template-columns: 38px auto 1fr;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .dcode {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em;
+    color: var(--rust); text-transform: uppercase;
+  }
+  .destinations a {
+    font-family: var(--font-body); font-style: italic;
+    font-size: 18px; color: var(--fg);
+    text-decoration: none;
+    position: relative;
+  }
+  .destinations a::after {
+    content: '→';
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-style: normal;
+    opacity: 0; transition: opacity 0.3s;
+    color: var(--lume);
+  }
+  .destinations a:hover::after { opacity: 1; }
+  .dline {
+    font-family: var(--font-body); font-style: italic;
+    font-size: 18px; color: var(--fg-faint);
+    text-decoration: line-through;
+    text-decoration-color: var(--rust);
+  }
+  .dnote {
+    font-family: var(--font-body); font-style: italic;
+    font-size: 13px; color: var(--fg-muted);
+  }
+  .colophon p { font-size: 13px; color: var(--fg-muted); margin: 0 0 8px; max-width: 30ch; }
+  .colophon em { color: var(--fg-warm); font-style: italic; }
+  .colophon .sig { margin-top: 20px; }
+
+  @media (max-width: 860px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .destinations { columns: 1; }
+  }
+</style>

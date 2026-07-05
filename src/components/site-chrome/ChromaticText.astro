@@ -1,0 +1,13 @@
+---
+interface Props { as?: keyof HTMLElementTagNameMap; }
+const { as: Tag = 'span' } = Astro.props;
+---
+<Tag class="chromatic"><slot /></Tag>
+
+<style>
+  .chromatic {
+    font-family: var(--font-mono);
+    text-shadow: 2px 0 var(--glitch-mag), -2px 0 var(--glitch-cyan);
+    letter-spacing: 2px;
+  }
+</style>

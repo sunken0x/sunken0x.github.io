@@ -1,0 +1,1 @@
+Drop JetBrainsMono-Regular.woff2 and JetBrainsMono-Bold.woff2 here. Grab from https://www.jetbrains.com/lp/mono/ and self-host — no Google Fonts CDN (privacy + speed). The build doesn't fail without them; the browser falls back to ui-monospace.

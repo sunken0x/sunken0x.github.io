@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="— · sunken0x">
+  <main class="echo">
+    <div class="echo-inner">
+      <p class="readout">unlogged entry · not in the manifest</p>
+      <h1 class="display display-dense">Echoes in the Fog</h1>
+      <p class="echo-body">
+        <em>An outlier artefact. Bass too hot. Kept here for the one who looked hard enough.</em>
+      </p>
+      <p class="echo-note">
+        Not music in the sense the other identity does music. A passing thing. The track is not good.
+        The climb to find this page is the joke.
+      </p>
+      <a class="echo-back" href="/">↩ surface</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .echo {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 40px;
+    position: relative;
+  }
+  .echo-inner {
+    max-width: 52ch;
+    text-align: center;
+  }
+  .echo h1 {
+    font-size: clamp(50px, 8vw, 110px);
+    margin: 18px 0;
+    color: var(--fg);
+  }
+  .echo-body {
+    font-size: 20px;
+    color: var(--fg-warm);
+    margin: 0 0 28px;
+  }
+  .echo-body em { color: var(--lume); font-style: italic; }
+  .echo-note {
+    font-size: 15px;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    margin: 0 auto 40px;
+    max-width: 40ch;
+  }
+  .echo-back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+  }
+  .echo-back:hover { color: var(--lume); border-color: var(--lume); }
+</style>

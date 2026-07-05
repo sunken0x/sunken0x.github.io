@@ -14,36 +14,7 @@ const { title = "sunken0x" } = Astro.props;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
-    <div class="cursor-ring" aria-hidden="true"></div>
-    <div class="cursor-dot" aria-hidden="true"></div>
     <slot />
-    <script>
-      // sonar cursor
-      const dot = document.querySelector('.cursor-dot');
-      const ring = document.querySelector('.cursor-ring');
-      if (dot && ring && !window.matchMedia('(pointer: coarse)').matches) {
-        let rx = 0, ry = 0, tx = 0, ty = 0;
-        document.addEventListener('mousemove', (e) => {
-          tx = e.clientX; ty = e.clientY;
-          dot.style.transform = `translate(${tx}px, ${ty}px) translate(-50%, -50%)`;
-        });
-        function loop() {
-          rx += (tx - rx) * 0.18;
-          ry += (ty - ry) * 0.18;
-          ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-          requestAnimationFrame(loop);
-        }
-        loop();
-        document.querySelectorAll('a, button, [data-hover]').forEach((el) => {
-          el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-          el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-        });
-      } else if (dot && ring) {
-        dot.style.display = 'none';
-        ring.style.display = 'none';
-        document.body.style.cursor = 'auto';
-      }
-    </script>
     <script>import "../scripts/easter-eggs.ts";</script>
   </body>
 </html>

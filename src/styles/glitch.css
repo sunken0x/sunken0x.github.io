@@ -1,21 +1,19 @@
-/* ===== Fonts: served from Google Fonts, self-host later ===== */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,200..900,0..100;1,9..144,200..900,0..100&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+/* ===== Fonts ===== */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
 
 /* ===== Typography primitives ===== */
 .display {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  font-variation-settings: "SOFT" 40, "opsz" 144, "wght" 400;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.02em;
-  line-height: 0.92;
+  line-height: 0.98;
 }
 .display-loose {
-  font-variation-settings: "SOFT" 90, "opsz" 144, "wght" 300;
+  font-weight: 400;
 }
 .display-dense {
-  font-variation-settings: "SOFT" 0, "opsz" 144, "wght" 700;
-  letter-spacing: -0.04em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .editorial {
@@ -72,28 +70,13 @@
   pointer-events: none;
 }
 
-/* ===== Sonar ping — the 0 in sunken0x ===== */
+/* ===== the 0 in sunken0x — plain, no effect ===== */
 .sonar {
-  display: inline-block;
-  position: relative;
-  width: 0.82em;
-  height: 0.82em;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  vertical-align: -0.05em;
-  margin: 0 0.04em;
+  display: inline;
+  color: inherit;
 }
 .sonar::before,
-.sonar::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid var(--lume);
-  opacity: 0;
-  animation: sonar-ping 3.2s var(--ease-sink) infinite;
-}
-.sonar::after { animation-delay: 1.6s; }
+.sonar::after { content: none; }
 @keyframes sonar-ping {
   0%   { transform: scale(0.8); opacity: 0.9; }
   80%  { transform: scale(2.6); opacity: 0; }

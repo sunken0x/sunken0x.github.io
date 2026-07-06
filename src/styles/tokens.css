@@ -27,8 +27,8 @@
   --rust:       #4d6a8f;
   --brine:      #22355c;
 
-  /* type stack — mono everywhere, like the lurker site */
-  --font-display: "SF Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  /* type stack — grotesk display, mono for UI voice */
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body:    "SF Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-mono:    "SF Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
 

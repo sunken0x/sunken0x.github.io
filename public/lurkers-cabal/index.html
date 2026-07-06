@@ -50,14 +50,7 @@
   .artgrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin:36px 0;}
   .artgrid .a{ background:var(--bg); border:1px solid var(--dimmer); position:relative; transition:transform .15s, border-color .15s;}
   .artgrid .a:hover{ transform:translateY(-4px);}
-  .artgrid .a:nth-child(1):hover{ border-color:var(--cyan);}
-  .artgrid .a:nth-child(2):hover{ border-color:var(--mag);}
-  .artgrid .a:nth-child(3):hover{ border-color:var(--red);}
-  .artgrid .a:nth-child(4):hover{ border-color:#fff;}
-  .artgrid .a:nth-child(5):hover{ border-color:#3A9E31;}
-  .artgrid .a:nth-child(6):hover{ border-color:#00FFFF;}
-  .artgrid .a:nth-child(7):hover{ border-color:#F9A2FD;}
-  .artgrid .a:nth-child(8):hover{ border-color:#CDCDCD;}
+  .artgrid .a:hover{ border-color:var(--ac,#4d6a8f);}
   .artgrid img{ width:100%; display:block;}
   .artgrid span{ position:absolute; bottom:8px; left:10px; font-size:9px; letter-spacing:.25em; color:var(--dim);}
   .specs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:36px;}
@@ -121,15 +114,15 @@
 <section id="art">
   <h2>THE ART</h2>
   <p class="big">Hand-drawn abstract entities, lurking inside the blockchain.</p>
-  <div class="artgrid">
-    <div class="a"><img src="art/lurker-cyan.svg" alt=""></div>
-    <div class="a"><img src="art/lurker-magenta.svg" alt=""></div>
-    <div class="a"><img src="art/lurker-red.svg" alt=""></div>
-    <div class="a"><img src="art/lurker-white.svg" alt=""></div>
-    <div class="a"><img src="art/lurker-06.svg" alt=""></div>
-    <div class="a"><img src="art/lurker-07.svg" alt=""></div>
-    <div class="a"><img src="art/lurker-08.svg" alt=""></div>
-    <div class="a"><img src="art/lurker-09.svg" alt=""></div>
+  <div class="artgrid" id="artgrid">
+    <div class="a" style="--ac:#00FFFF"><img src="art/lurker-cyan.svg" alt=""></div>
+    <div class="a" style="--ac:#F007BE"><img src="art/lurker-magenta.svg" alt=""></div>
+    <div class="a" style="--ac:#F20519"><img src="art/lurker-red.svg" alt=""></div>
+    <div class="a" style="--ac:#ffffff"><img src="art/lurker-white.svg" alt=""></div>
+    <div class="a" style="--ac:#3A9E31"><img src="art/lurker-06.svg" alt=""></div>
+    <div class="a" style="--ac:#00FFFF"><img src="art/lurker-07.svg" alt=""></div>
+    <div class="a" style="--ac:#F9A2FD"><img src="art/lurker-08.svg" alt=""></div>
+    <div class="a" style="--ac:#CDCDCD"><img src="art/lurker-09.svg" alt=""></div>
   </div>
   <div class="specs">
     <div class="spec"><div class="k">MEDIUM</div><div class="v">Hand-drawn SVG, fully on-chain</div></div>
@@ -171,6 +164,10 @@
   const fstyle=document.createElement('style');document.head.appendChild(fstyle);
   fstyle.textContent="@font-face{font-family:'HitMePunk';src:url('fonts/hmp-01.ttf') format('truetype');}";
 })();
+
+/* ---- shuffle the art wall on each load ---- */
+(function(){const g=document.getElementById('artgrid');if(!g)return;
+  const a=[...g.children];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));g.appendChild(a[j]);a.splice(j,1);}})();
 
 /* ---- the cabal has many names: cycling hero wordmark ---- */
 const NAMES=["LURKERS","THE SILENT ONES","WATCHERS","SHY GUYS","THE MANY","LOCUSTS",

@@ -28,9 +28,9 @@ const pieces = (await getCollection('pieces', (p: any) => p.data.collection === 
   <main class={`coll ${accent}`}>
 
     <section class="coll-hero">
-      <p class="readout sink sink-1">Station {station} · {title.toLowerCase()}</p>
+      <p class="readout sink sink-1">Collection</p>
       <h1 class="display display-dense sink sink-2">{title}</h1>
-      {intro && <p class="coll-intro sink sink-3"><em>{intro}</em></p>}
+      {intro && <p class="coll-intro sink sink-3">{intro}</p>}
 
       {marketplace_url && (
         <p class="coll-market sink sink-3">
@@ -42,17 +42,16 @@ const pieces = (await getCollection('pieces', (p: any) => p.data.collection === 
       )}
 
       <div class="depth-marker sink sink-4">
-        <span class="tick">{depth}</span>
         <div class="rule"></div>
-        <span>{pieces.length} specimen{pieces.length === 1 ? '' : 's'}</span>
+        <span>{pieces.length} piece{pieces.length === 1 ? '' : 's'}</span>
       </div>
     </section>
 
     {pieces.length === 0
       ? (
         <div class="coll-empty">
-          <p class="display display-loose">Empty net.</p>
-          <p>This station is being catalogued. Return soon, or follow the departures in the log book below.</p>
+          <p class="display display-loose">Nothing here yet.</p>
+          <p>This collection is being catalogued. Links are in the footer below.</p>
         </div>
       )
       : (
@@ -105,12 +104,12 @@ const pieces = (await getCollection('pieces', (p: any) => p.data.collection === 
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 1px;
-    padding: 6px 10px;
+    padding: 8px 14px;
     text-decoration: none;
-    border: 1px solid var(--glitch-mag);
-    color: var(--glitch-mag);
+    border: 1px solid var(--fg);
+    color: var(--fg);
   }
-  .coll-market a:hover { background: var(--glitch-mag); color: var(--bg); }
+  .coll-market a:hover { background: var(--fg); color: var(--bg-sig); }
   .coll-market a.coll-market-secondary {
     margin-left: 10px;
     border-color: var(--border);

@@ -1,37 +1,23 @@
 ---
-// Vessel-manifest style header. The zero is a sonar ping.
-const now = new Date();
-const coords = "52°28'N • 002°01'W";  // manifest-style placeholder coords
+// Header. The zero is an easter-egg trigger.
 ---
 <header class="site-header">
   <a href="/" class="mark" aria-label="sunken0x — home">
-    <span class="mark-prefix">sunken</span><span class="sonar" data-egg="0"></span><span class="mark-suffix">x</span>
+    <span class="mark-prefix">sunken</span><span class="sonar" data-egg="0">0</span><span class="mark-suffix">x</span>
   </a>
-  <div class="manifest">
-    <div class="manifest-row">
-      <span class="label">vessel</span><span class="value">sunken0x</span>
-    </div>
-    <div class="manifest-row">
-      <span class="label">coords</span><span class="value">{coords}</span>
-    </div>
-    <div class="manifest-row">
-      <span class="label">log</span><span class="value">{now.toISOString().slice(0,10)}</span>
-    </div>
-  </div>
   <nav>
-    <a href="/depths-of-glitch"><span class="n-num">01</span>Depths of Glitch</a>
-    <a href="/works"><span class="n-num">02</span>Manifest</a>
-    <a href="/about"><span class="n-num">03</span>Log Book</a>
+    <a href="/works"><span class="n-num">01</span>Works</a>
+    <a href="/about"><span class="n-num">02</span>About</a>
   </nav>
 </header>
 
 <style>
   .site-header {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 48px;
-    padding: 28px 40px 20px;
+    padding: 22px 40px 20px;
     position: relative;
     z-index: 10;
   }
@@ -44,10 +30,10 @@ const coords = "52°28'N • 002°01'W";  // manifest-style placeholder coords
   }
 
   .mark {
-    font-family: var(--font-display);
-    font-variation-settings: "SOFT" 100, "opsz" 144, "wght" 300;
-    font-size: 26px;
-    letter-spacing: -0.03em;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: 0.05em;
     color: var(--fg);
     text-decoration: none;
     line-height: 1;
@@ -73,9 +59,10 @@ const coords = "52°28'N • 002°01'W";  // manifest-style placeholder coords
 
   nav {
     display: flex; gap: 24px;
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: 15px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
   }
   nav a {
     color: var(--fg-muted);

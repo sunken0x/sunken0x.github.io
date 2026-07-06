@@ -10,83 +10,78 @@ const featured = (await getCollection('pieces', (p: any) => p.data.featured))
 
 const allPieces = await getCollection('pieces');
 const surfaceSamples = allPieces.slice(0, 6);
-
 const showing = featured.length > 0 ? featured : surfaceSamples;
 
+const count = (s: string) => allPieces.filter((p: any) => p.data.collection === s).length;
+
 const collections = [
-  { slug: 'depths-of-glitch', name: 'Depths of Glitch', depth: '−2300m', count: allPieces.filter((p: any) => p.data.collection === 'depths-of-glitch').length, note: '29 specimens · generative' },
-  { slug: 'murky-depths',     name: 'Murky Depths',     depth: '−0870m', count: allPieces.filter((p: any) => p.data.collection === 'murky-depths').length,    note: 'editions · 1/1 on SuperRare' },
-  { slug: 'glitch-maps',      name: 'Glitch Maps',      depth: '−0260m', count: allPieces.filter((p: any) => p.data.collection === 'glitch-maps').length,     note: '256.art · ethereum' },
-  { slug: 'lurkers',          name: 'Lurkers',          depth: '−0090m', count: allPieces.filter((p: any) => p.data.collection === 'lurkers').length,         note: 'PFP series · ordinals' },
-  { slug: 'orange-editions',  name: 'Orange Editions',  depth: '−0030m', count: allPieces.filter((p: any) => p.data.collection === 'orange-editions').length, note: 'warm spectrum' },
+  { slug: 'depths-of-glitch', name: 'Depths of Glitch',          chain: 'Ethereum', note: 'generative' },
+  { slug: 'glitch-maps',      name: 'Glitch Maps',               chain: 'Ethereum', note: 'generative · 256.art' },
+  { slug: 'murky-depths',     name: 'Murky Depths',              chain: 'Ethereum', note: 'editions · SuperRare' },
+  { slug: 'art-token',        name: 'Art Token',                 chain: 'Ethereum', note: 'bidders editions · Manifold' },
+  { slug: 'lurkers',          name: 'Lurkers — Onchain Editions', chain: 'Ethereum', note: 'editions' },
+  { slug: 'orange-editions',  name: 'Orange Editions',           chain: 'Bitcoin',  note: 'Ordinals · Gamma' },
+  { slug: 'orange-haze',      name: 'Orange Haze',               chain: 'Bitcoin',  note: '1/1s · Ordinals' },
+  { slug: 'the-glitch',       name: 'The Glitch',                chain: 'Bitcoin',  note: 'generative · Ordinals' },
+  { slug: 'lurkersbtc',       name: 'LurkersBTC',                chain: 'Bitcoin',  note: 'PFP · Ordinals' },
+  { slug: 'lurker-pepes',     name: 'Lurker Pepes',              chain: 'Bitcoin',  note: 'hand-drawn · Ordinals' },
+  { slug: 'tezos-editions',   name: 'Tezos Editions',            chain: 'Tezos',    note: 'objkt' },
 ];
 ---
-<BaseLayout title="sunken0x · log book">
+<BaseLayout title="sunken0x">
   <Header />
 
-  <!-- SURFACE — hero  -->
-  <section class="surface">
-    <div class="coord readout sink sink-1">0m · surface</div>
-    <h1 class="sink sink-2">
-      <span class="display display-loose line-1">a field guide</span>
-      <span class="display display-dense line-2">to what sunk</span>
+  <!-- hero -->
+  <section class="hero">
+    <div class="readout">GLITCH · GENERATIVE · ON-CHAIN</div>
+    <h1>
+      <span class="line-1">Glitch, generative,</span>
+      <span class="line-2">fully on-chain.</span>
     </h1>
 
-    <p class="lede sink sink-3">
-      <em>Records pulled from under the signal.</em> The work of
-      <span class="attrib">sunken0x</span> — glitch native, fully generative,
-      catalogued by depth rather than by date.
+    <p class="lede">
+      The work of <span class="attrib">sunken0x</span> — glitch-native and generative,
+      across Ethereum, Bitcoin Ordinals, and Tezos.
     </p>
 
-    <div class="surface-actions sink sink-4">
-      <a href="/depths-of-glitch" class="dive" data-hover>
-        <span class="dive-label">Descend →</span>
-        <span class="dive-sub">29 specimens · Depths of Glitch</span>
+    <div class="hero-actions">
+      <a href="/works" class="cta" data-hover>
+        <span class="cta-label">View works →</span>
+        <span class="cta-sub">{allPieces.length} pieces · {collections.length} collections</span>
       </a>
-      <div class="surface-meta">
-        <p class="readout">Conditions</p>
-        <p class="meta-val">low visibility · current N·NE</p>
-      </div>
-    </div>
-
-    <div class="scroll-hint sink sink-5">
-      <span class="readout">scroll to descend</span>
-      <span class="line"></span>
     </div>
   </section>
 
-  <!-- FIRST DEPTH — featured specimens -->
+  <!-- selected -->
   <section class="deck">
     <header class="deck-head">
       <div>
-        <p class="readout">Station 01 · surfaced today</p>
-        <h2 class="display display-dense">Recent catches</h2>
+        <p class="readout">Selected</p>
+        <h2>Recent work</h2>
       </div>
-      <a href="/works" class="deck-link" data-hover>see the full manifest <span class="arr">→</span></a>
+      <a href="/works" class="deck-link" data-hover>all works <span class="arr">→</span></a>
     </header>
 
     <div class="catch-grid">
       {showing.map((p: any, i: number) => {
-        const depth = 100 + i * 310;
         const href = p.data.collection === 'depths-of-glitch'
           ? `/depths-of-glitch/${p.data.slug}`
           : `/${p.data.collection}`;
         return (
-          <a href={href} class="catch specimen" data-hover>
+          <a href={href} class="catch" data-hover>
             <div class="tag-top">
-              <span>−{String(depth).padStart(4, '0')}m</span>
+              <span>{p.data.chain}</span>
               <span>№ {String(i + 1).padStart(2, '0')}</span>
             </div>
             <div class="catch-embed">
               {p.data.live_source
                 ? <iframe src={p.data.live_source} loading="lazy" sandbox="allow-scripts" title={p.data.title}></iframe>
-                : <div class="catch-blank">specimen in transit</div>
+                : <div class="catch-blank">—</div>
               }
             </div>
             <div class="tag-body">
               <h3>{p.data.title}</h3>
-              <p class="latin">{p.data.collection.replaceAll('-', ' ')}</p>
-              {p.data.notes && <p class="notes">{p.data.notes.slice(0, 120)}</p>}
+              <p class="sub">{p.data.collection.replaceAll('-', ' ')}</p>
             </div>
           </a>
         );
@@ -94,23 +89,21 @@ const collections = [
     </div>
   </section>
 
-  <!-- TRENCH — collections  -->
-  <section class="trench">
-    <div class="depth-marker">
-      <span class="tick">−1500m</span>
-      <div class="rule"></div>
-      <span>collections · by depth</span>
+  <!-- collections -->
+  <section class="index">
+    <div class="index-head">
+      <p class="readout">Collections</p>
     </div>
 
-    <ul class="trench-list">
+    <ul class="index-list">
       {collections.map((c) => (
         <li>
           <a href={`/${c.slug}`} data-hover>
-            <span class="depth-num">{c.depth}</span>
-            <span class="c-name display">{c.name}</span>
+            <span class="c-chain">{c.chain}</span>
+            <span class="c-name">{c.name}</span>
             <span class="c-note">{c.note}</span>
-            <span class="c-count">{c.count} <em>pcs</em></span>
-            <span class="c-arr">↓</span>
+            <span class="c-count">{count(c.slug)} <em>pcs</em></span>
+            <span class="c-arr">→</span>
           </a>
         </li>
       ))}
@@ -118,52 +111,35 @@ const collections = [
   </section>
 
   <Footer />
-
 </BaseLayout>
 
 <style>
-  .surface {
-    min-height: 86vh;
-    padding: 60px 40px 80px;
-    display: grid;
-    grid-template-rows: auto 1fr auto auto;
-    gap: 20px;
-    position: relative;
+  .hero {
+    padding: 70px 40px 90px;
     max-width: 1400px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
   }
-  .coord { align-self: start; padding-top: 8px; }
-
   h1 {
-    margin: 0;
-    font-size: clamp(60px, 12vw, 200px);
+    margin: 6px 0 0;
+    font-size: clamp(48px, 9vw, 128px);
     color: var(--fg);
-    line-height: 0.88;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
   }
-  .line-1 {
-    display: block;
-    color: var(--fg-warm);
-    font-style: italic;
-    font-variation-settings: "SOFT" 100, "opsz" 144, "wght" 300;
-    letter-spacing: -0.015em;
-    font-size: 0.52em;
-  }
-  .line-2 {
-    display: block;
-    margin-top: 6px;
-    color: var(--fg);
-  }
+  .line-1 { display: block; color: var(--fg-muted); }
+  .line-2 { display: block; color: var(--fg); }
 
   .lede {
-    max-width: 52ch;
-    font-size: 20px;
-    line-height: 1.5;
+    max-width: 54ch;
+    font-size: 17px;
+    line-height: 1.7;
     color: var(--fg-warm);
-    margin: 20px 0 0;
+    margin: 10px 0 0;
   }
-  .lede em { color: var(--lume); font-style: italic; }
   .attrib {
-    font-family: var(--font-mono);
     font-size: 13px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -171,185 +147,94 @@ const collections = [
     background: var(--bg-elev);
     padding: 2px 8px;
     border: 1px solid var(--border);
-    margin: 0 4px;
-    vertical-align: 2px;
+    margin: 0 2px;
   }
 
-  .surface-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 40px;
-    margin-top: 28px;
-  }
-  .dive {
-    display: block;
-    padding: 18px 24px;
-    border: 1px solid var(--lume);
+  .hero-actions { margin-top: 22px; }
+  .cta {
+    display: inline-block;
+    padding: 16px 24px;
+    border: 1px solid var(--fg);
     color: var(--fg);
     text-decoration: none;
-    max-width: 360px;
-    transition: background 0.4s var(--ease-sink);
+    transition: background 0.2s, color 0.2s;
   }
-  .dive:hover { background: var(--lume); color: var(--bg-deep); }
-  .dive:hover .dive-sub { color: var(--bg-deep); }
-  .dive-label {
+  .cta:hover { background: var(--fg); color: var(--bg-sig); }
+  .cta:hover .cta-sub { color: var(--bg-sig); }
+  .cta-label { display: block; font-size: 15px; letter-spacing: 0.06em; }
+  .cta-sub {
     display: block;
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-variation-settings: "SOFT" 60, "opsz" 144, "wght" 400;
-  }
-  .dive-sub {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--fg-muted);
     margin-top: 6px;
   }
-  .surface-meta { text-align: right; }
-  .surface-meta .meta-val { font-family: var(--font-body); font-style: italic; color: var(--fg); font-size: 16px; margin: 4px 0 0; }
 
-  .scroll-hint {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 18px;
-    align-items: center;
-    color: var(--fg-faint);
-    margin-top: 36px;
-  }
-  .scroll-hint .line {
-    height: 1px;
-    background: linear-gradient(90deg, var(--fg-faint), transparent);
-    animation: pulse-line 3s var(--ease-sink) infinite;
-  }
-  @keyframes pulse-line { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-  /* DECK — the first station below surface */
-  .deck {
-    padding: 80px 40px 60px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
+  /* selected */
+  .deck { padding: 40px 40px 60px; max-width: 1400px; margin: 0 auto; }
   .deck-head {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     gap: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 34px;
     border-top: 1px solid var(--border-faint);
-    padding-top: 28px;
+    padding-top: 26px;
   }
-  .deck-head h2 {
-    font-size: clamp(40px, 5vw, 72px);
-    margin: 6px 0 0;
-    color: var(--fg);
-  }
+  .deck-head h2 { font-size: clamp(30px, 4vw, 52px); margin: 8px 0 0; color: var(--fg); letter-spacing: -0.01em; }
   .deck-link {
-    font-family: var(--font-body); font-style: italic;
-    font-size: 16px;
-    color: var(--fg-muted);
-    text-decoration: none;
-    white-space: nowrap;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--fg-muted); text-decoration: none; white-space: nowrap;
+    padding-bottom: 6px; border-bottom: 1px solid var(--border);
   }
-  .deck-link:hover { color: var(--lume); border-color: var(--lume); }
-  .deck-link .arr { margin-left: 6px; font-family: var(--font-mono); font-style: normal; }
+  .deck-link:hover { color: var(--fg); border-color: var(--fg); }
+  .deck-link .arr { margin-left: 6px; }
 
-  .catch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
+  .catch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .catch { text-decoration: none; color: var(--fg); border: 1px solid var(--border-faint); transition: transform 0.15s, border-color 0.15s; }
+  .catch:hover { transform: translateY(-4px); border-color: var(--fg-muted); }
+  .tag-top {
+    display: flex; justify-content: space-between;
+    padding: 10px 12px;
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-muted);
   }
-  .catch {
-    text-decoration: none;
-    color: var(--fg);
-    transition: transform 0.6s var(--ease-sink), border-color 0.4s;
-  }
-  .catch:hover { transform: translateY(-4px); border-color: var(--lume); }
-  .catch-embed {
-    position: relative;
-    aspect-ratio: 1/1;
-    overflow: hidden;
-    background: var(--bg-deep);
-    border-top: 1px solid var(--border-faint);
-    border-bottom: 1px solid var(--border-faint);
-  }
+  .catch-embed { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--bg-deep); border-top: 1px solid var(--border-faint); border-bottom: 1px solid var(--border-faint); }
   .catch-embed iframe { width: 100%; height: 100%; border: 0; pointer-events: none; }
-  .catch-blank {
-    display: grid; place-items: center;
-    width: 100%; height: 100%;
-    font-family: var(--font-mono);
-    font-size: 10px; letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--fg-faint);
-  }
+  .catch-blank { display: grid; place-items: center; width: 100%; height: 100%; color: var(--fg-faint); }
+  .tag-body { padding: 12px; }
+  .tag-body h3 { margin: 0; font-size: 15px; color: var(--fg); font-weight: 600; }
+  .sub { margin: 4px 0 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); }
 
-  /* TRENCH — collections as a vertical descent list */
-  .trench {
-    padding: 40px 40px 60px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .trench-list {
-    list-style: none; padding: 0; margin: 0;
-    border-top: 1px solid var(--border-faint);
-  }
-  .trench-list li { border-bottom: 1px solid var(--border-faint); }
-  .trench-list a {
+  /* collections */
+  .index { padding: 40px 40px 70px; max-width: 1400px; margin: 0 auto; }
+  .index-head { border-top: 1px solid var(--border-faint); padding-top: 26px; margin-bottom: 6px; }
+  .index-list { list-style: none; padding: 0; margin: 0; }
+  .index-list li { border-bottom: 1px solid var(--border-faint); }
+  .index-list a {
     display: grid;
-    grid-template-columns: 120px 1fr 1.4fr auto 40px;
+    grid-template-columns: 110px 1.4fr 1.4fr auto 30px;
     align-items: baseline;
     gap: 24px;
-    padding: 26px 4px;
+    padding: 22px 4px;
     text-decoration: none;
     color: var(--fg);
-    transition: background 0.4s var(--ease-sink), padding 0.4s var(--ease-sink);
+    transition: background 0.2s, padding 0.2s;
   }
-  .trench-list a:hover {
-    background: var(--bg-elev);
-    padding-left: 20px;
-  }
-  .trench-list a:hover .c-arr { color: var(--lume); transform: translateY(6px); }
-  .depth-num {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    color: var(--rust);
-  }
-  .c-name {
-    font-size: clamp(28px, 3.2vw, 48px);
-    line-height: 1;
-    color: var(--fg);
-    font-variation-settings: "SOFT" 80, "opsz" 144, "wght" 400;
-  }
-  .c-note {
-    font-family: var(--font-body); font-style: italic;
-    color: var(--fg-muted); font-size: 15px;
-  }
-  .c-count { font-family: var(--font-mono); font-size: 12px; color: var(--fg-warm); }
+  .index-list a:hover { background: var(--bg-elev); padding-left: 18px; }
+  .index-list a:hover .c-arr { color: var(--fg); transform: translateX(4px); }
+  .c-chain { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted); }
+  .c-name { font-size: clamp(20px, 2.4vw, 32px); line-height: 1.05; color: var(--fg); }
+  .c-note { font-size: 12px; letter-spacing: 0.06em; color: var(--fg-muted); }
+  .c-count { font-size: 12px; color: var(--fg-warm); }
   .c-count em { font-style: normal; color: var(--fg-faint); font-size: 10px; letter-spacing: 0.16em; }
-  .c-arr {
-    font-family: var(--font-mono);
-    color: var(--fg-faint);
-    text-align: right;
-    transition: color 0.4s var(--ease-sink), transform 0.4s var(--ease-sink);
-  }
+  .c-arr { color: var(--fg-faint); text-align: right; transition: color 0.2s, transform 0.2s; }
 
   @media (max-width: 860px) {
-    .surface { padding: 30px 22px 60px; min-height: 70vh; }
-    .surface-actions { flex-direction: column; align-items: flex-start; gap: 20px; }
-    .surface-meta { text-align: left; }
-    .deck, .trench { padding-left: 22px; padding-right: 22px; }
+    .hero { padding: 30px 22px 50px; }
+    .deck, .index { padding-left: 22px; padding-right: 22px; }
     .deck-head { flex-direction: column; align-items: flex-start; }
-    .trench-list a {
-      grid-template-columns: 80px 1fr;
-      gap: 10px;
-    }
-    .trench-list .c-note,
-    .trench-list .c-count,
-    .trench-list .c-arr { grid-column: 1 / -1; padding-left: 90px; margin-top: -8px; }
+    .index-list a { grid-template-columns: 80px 1fr; gap: 8px; }
+    .index-list .c-note, .index-list .c-count, .index-list .c-arr { grid-column: 1 / -1; padding-left: 88px; margin-top: -6px; }
   }
 </style>

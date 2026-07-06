@@ -12,16 +12,15 @@ const items = (await getCollection('pieces')).map((p: any) => ({
   technique: p.data.technique,
 }));
 ---
-<BaseLayout title="Manifest — sunken0x">
+<BaseLayout title="Works — sunken0x">
   <Header />
   <main class="works-page">
-    <p class="readout sink sink-1">Station 02 · manifest</p>
-    <h1 class="display display-dense sink sink-2">Manifest</h1>
-    <p class="works-sub sink sink-3"><em>Every specimen logged — filterable by station, chain, and capture technique.</em></p>
+    <p class="readout sink sink-1">Works</p>
+    <h1 class="display display-dense sink sink-2">Everything</h1>
+    <p class="works-sub sink sink-3">Every piece, filterable by collection, chain, and technique.</p>
     <div class="depth-marker sink sink-4">
-      <span class="tick">−0000m</span>
       <div class="rule"></div>
-      <span>{items.length} specimens</span>
+      <span>{items.length} pieces</span>
     </div>
     <WorksFilter items={items} client:load />
   </main>

@@ -7,16 +7,14 @@ const entry = await getEntry('writing', 'about');
 if (!entry) throw new Error('writing/about.md missing');
 const { Content } = await render(entry);
 ---
-<BaseLayout title="Log book — sunken0x">
+<BaseLayout title="About — sunken0x">
   <Header />
   <main class="log">
-    <p class="readout sink sink-1">Station 08 · log book</p>
-    <h1 class="display display-dense sink sink-2">Log Book</h1>
-    <p class="log-sub sink sink-3"><em>Field notes, bearings, incidental matter.</em></p>
+    <p class="readout sink sink-1">About</p>
+    <h1 class="display display-dense sink sink-2">About</h1>
+    <p class="log-sub sink sink-3">Notes and incidental matter.</p>
     <div class="depth-marker sink sink-4">
-      <span class="tick">−0050m</span>
       <div class="rule"></div>
-      <span>entry ↓</span>
     </div>
     <article class="log-body sink sink-5">
       <Content />

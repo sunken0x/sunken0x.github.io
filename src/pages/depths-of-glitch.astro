@@ -26,22 +26,18 @@ const pieces = (await getCollection('pieces', (p: any) => p.data.collection === 
   <main class="dog-page">
 
     <section class="dog-hero">
-      <p class="readout sink sink-1">Station 02 · depths of glitch</p>
+      <p class="readout sink sink-1">Collection</p>
       <h1 class="sink sink-2">
-        <span class="display display-loose">what the sonar</span>
-        <span class="display display-dense">caught below</span>
+        <span class="display display-dense">Depths of Glitch</span>
       </h1>
       <p class="dog-lede sink sink-3">
-        {pieces.length} specimens from the <em>Depths of Glitch</em> collection.
-        Each one generative, fully self-contained, pulled up from
-        <span class="depth-chip">−0800m</span> to <span class="depth-chip">−4300m</span>.
-        Hover to awaken. Click to descend.
+        {pieces.length} pieces. Each one generative and fully self-contained.
+        Hover to play. Click to open.
       </p>
 
       <div class="depth-marker sink sink-4">
-        <span class="tick">−0800m</span>
         <div class="rule"></div>
-        <span>specimens ↓</span>
+        <span>{pieces.length} pieces</span>
       </div>
     </section>
 

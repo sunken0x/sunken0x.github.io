@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LURKERS — the silent majority</title>
+<meta name="description" content="333 hand-drawn lurkers. Fully on-chain SVG on Ethereum. We are the silent majority.">
+<style>
+  /* HitMePunk face is injected by JS — ?font=NN or ←/→ keys to switch (dev helper, strip at launch) */
+  :root{ --bg:#000B25; --grn:#3A9E31; --red:#F20519; --cyan:#00FFFF; --mag:#F007BE; --dim:#4d6a8f; --dimmer:#22355c; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg); color:#e8f2e8; font-family:"SF Mono",Menlo,Consolas,monospace; overflow-x:hidden;}
+  a{color:#e8f2e8; text-decoration:none;}
+  section{ max-width:880px; margin:0 auto; padding:110px 24px; position:relative; z-index:2;}
+
+  /* nav */
+  nav{ position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center;
+    padding:16px 24px; background:rgba(0,11,37,.82); backdrop-filter:blur(6px); z-index:50; border-bottom:1px solid var(--dimmer);}
+  nav .wd{ font-family:'HitMePunk',"SF Mono",Menlo,monospace; font-weight:400; letter-spacing:.2em; font-size:19px; color:#e8f2e8;}
+  nav .links{ display:flex; gap:22px; font-size:10px; letter-spacing:.2em;}
+  nav .links a{ color:var(--dim);} nav .links a:hover{ color:#e8f2e8;}
+
+  /* hero */
+  .hero{ min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding-top:120px;}
+  .hero .lurk{ width:min(52vh,420px); animation:loom 7s ease-in-out infinite;}
+  @keyframes loom{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .hero .lurk img{ width:100%; display:block;}
+  h1{ font-family:'HitMePunk',"SF Mono",Menlo,monospace; font-size:clamp(46px,10vw,104px); letter-spacing:.12em; color:#e8f2e8; font-weight:400; text-indent:.12em;
+      transition:opacity .35s ease; min-height:1.15em;}
+  h1.swap{ opacity:0;}
+  .hero .tag{ margin-top:18px; font-size:clamp(12px,2vw,16px); color:#e8f2e8; letter-spacing:.12em;}
+  .hero .sub{ margin-top:10px; font-size:11px; color:var(--dim); letter-spacing:.18em;}
+  .hero .cta{ margin-top:44px; display:flex; gap:16px;}
+  .btn{ display:inline-block; border:1px solid #e8f2e8; color:#e8f2e8; padding:14px 30px;
+    font:600 11px/1 "SF Mono",Menlo,monospace; letter-spacing:.25em; cursor:pointer; background:transparent;}
+  .btn:hover{ background:#e8f2e8; color:var(--bg);}
+
+  h2{ font-size:12px; letter-spacing:.35em; color:var(--dim); margin-bottom:34px; font-weight:600;}
+  p.big{ font-size:clamp(17px,2.6vw,24px); line-height:1.75; color:#e8f2e8;}
+  p.mid{ font-size:14px; line-height:2; color:#b9cdb9; margin-top:22px;}
+  .quiet{ color:var(--dim);}
+
+  /* manifesto lines */
+  .lines{ display:flex; flex-direction:column; gap:26px; margin-top:10px;}
+  .lines .l{ font-size:clamp(15px,2.2vw,20px); line-height:1.7;}
+  .lines .l b{ color:#ffffff; font-weight:600;}
+
+  /* art */
+  .artgrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin:36px 0;}
+  .artgrid .a{ background:var(--bg); border:1px solid var(--dimmer); position:relative; transition:transform .15s, border-color .15s;}
+  .artgrid .a:hover{ transform:translateY(-4px);}
+  .artgrid .a:nth-child(1):hover{ border-color:var(--cyan);}
+  .artgrid .a:nth-child(2):hover{ border-color:var(--mag);}
+  .artgrid .a:nth-child(3):hover{ border-color:var(--red);}
+  .artgrid .a:nth-child(4):hover{ border-color:#fff;}
+  .artgrid img{ width:100%; display:block;}
+  .artgrid span{ position:absolute; bottom:8px; left:10px; font-size:9px; letter-spacing:.25em; color:var(--dim);}
+  .specs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:36px;}
+  .spec{ border:1px solid var(--dimmer); padding:22px;}
+  .spec .k{ font-size:9px; letter-spacing:.3em; color:var(--dim); margin-bottom:10px;}
+  .spec .v{ font-size:15px; color:#e8f2e8; line-height:1.5;}
+
+  /* rules */
+  .rules{ counter-reset:rule; display:flex; flex-direction:column; border:1px solid var(--dimmer);}
+  .rule{ padding:24px; border-bottom:1px solid var(--dimmer); display:flex; gap:20px; align-items:baseline;}
+  .rule:last-child{ border-bottom:0;}
+  .rule::before{ counter-increment:rule; content:"0" counter(rule); color:var(--dim); font-size:11px; letter-spacing:.2em;}
+  .rule span{ font-size:14px; line-height:1.7; color:#cfe3cf;}
+
+  /* mint */
+  .mintbox{ border:1px solid var(--dimmer); padding:44px; text-align:center;}
+  .mintbox .status{ font-size:10px; letter-spacing:.35em; color:var(--dim); margin-bottom:20px;}
+  .mintbox .big{ margin-bottom:8px;}
+  .bar{ height:6px; background:var(--dimmer); margin:30px 0 10px; position:relative;}
+  .bar i{ position:absolute; inset:0 auto 0 0; width:0%; background:#e8f2e8;}
+  .bar+.quiet{ font-size:10px; letter-spacing:.2em;}
+  .mrow{ display:flex; justify-content:center; gap:40px; margin:28px 0; font-size:12px; color:var(--dim); letter-spacing:.15em;}
+  .mrow b{ color:#e8f2e8;}
+
+  footer{ text-align:center; padding:70px 20px 90px; color:var(--dimmer); font-size:10px; letter-spacing:.25em; position:relative; z-index:2;}
+
+  /* edge lurkers — real ones, half-hidden, watching */
+  .edge{ position:fixed; z-index:1; opacity:.38; pointer-events:none; width:210px;}
+  .edge img{ width:100%; display:block;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wd">LURKERS</div>
+  <div class="links">
+    <a href="#cabal">THE CABAL</a><a href="#art">THE ART</a><a href="#rules">RULES</a><a href="#mint">MINT</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="lurk"><img src="art/hero.gif" alt=""></div>
+  <h1 id="names">LURKERS</h1>
+  <div class="tag">we are the silent majority.</div>
+  <div class="sub">333 · FULLY ON-CHAIN · ETHEREUM</div>
+  <div class="cta">
+    <a class="btn" href="#cabal">ENTER QUIETLY</a>
+  </div>
+</div>
+
+<section id="cabal">
+  <h2>THE LURKER CABAL</h2>
+  <div class="lines">
+    <div class="l">Every Discord, every Telegram, every timeline — <b>95% of the room says nothing.</b></div>
+    <div class="l">We are the watchers. The scrollers. <b>The Silence.</b></div>
+    <div class="l">Nobody founded this. <b>We are the cabal — we always were.</b> We outnumber the loud ones. Now we join forces.</div>
+    <div class="l" style="color:#ffffff;letter-spacing:.08em"><b>LURKERS UNITE. WE ARE THE MANY.</b></div>
+  </div>
+</section>
+
+<section id="art">
+  <h2>THE ART</h2>
+  <p class="big">Hand-drawn abstract entities, lurking inside the blockchain.</p>
+  <div class="artgrid">
+    <div class="a"><img src="art/lurker-cyan.svg" alt=""><span>CYAN</span></div>
+    <div class="a"><img src="art/lurker-magenta.svg" alt=""><span>MAGENTA</span></div>
+    <div class="a"><img src="art/lurker-red.svg" alt=""><span>RED</span></div>
+    <div class="a"><img src="art/lurker-white.svg" alt=""><span>WHITE</span></div>
+  </div>
+  <div class="specs">
+    <div class="spec"><div class="k">MEDIUM</div><div class="v">Hand-drawn SVG, fully on-chain</div></div>
+    <div class="spec"><div class="k">RESOLUTION</div><div class="v">Infinite. Vector lines scale to any size — phone, print, billboard — with zero pixelation</div></div>
+    <div class="spec"><div class="k">STORAGE</div><div class="v">Each lurker is embedded in Ethereum itself. No IPFS, no server, no link that dies</div></div>
+    <div class="spec"><div class="k">SUPPLY</div><div class="v">333</div></div>
+  </div>
+</section>
+
+<section id="rules">
+  <h2>CABAL RULES</h2>
+  <div class="rules">
+    <div class="rule"><span>You do not talk about the cabal. Reposting is permitted.</span></div>
+    <div class="rule"><span>Watch first. Watch second. Reply never.</span></div>
+    <div class="rule"><span>A lurker is never early and never late. A lurker was already here.</span></div>
+    <div class="rule"><span>If someone asks who runs this — say nothing. You have said too much already.</span></div>
+    <div class="rule"><span>The loud ones perform. We accumulate.</span></div>
+  </div>
+</section>
+
+<section id="mint">
+  <h2>MINT</h2>
+  <div class="mintbox">
+    <div class="status">STATUS: SEALED — THE CABAL IS ASSEMBLING</div>
+    <p class="big">Minting opens when enough of us are watching.</p>
+    <div class="mrow"><div>SUPPLY <b>333</b></div><div>PRICE <b>TBA</b></div><div>CHAIN <b>ETHEREUM</b></div></div>
+    <div class="bar"><i id="mintbar"></i></div>
+    <div class="quiet"><span id="mintcount">0</span> / 333 CLAIMED</div>
+    <div style="margin-top:34px"><button class="btn" id="connect">CONNECT WALLET</button></div>
+    <p class="mid quiet" style="margin-top:26px">Follow quietly. You will know.</p>
+  </div>
+</section>
+
+<footer>SAY NOTHING · LURKERS © THE MANY · FULLY ON-CHAIN</footer>
+
+<script>
+/* ---- wordmark face ---- */
+(function(){
+  const fstyle=document.createElement('style');document.head.appendChild(fstyle);
+  fstyle.textContent="@font-face{font-family:'HitMePunk';src:url('fonts/hmp-01.ttf') format('truetype');}";
+})();
+
+/* ---- the cabal has many names: cycling hero wordmark ---- */
+const NAMES=["LURKERS","THE SILENT ONES","WATCHERS","SHY GUYS","THE MANY","LOCUSTS",
+             "THE UNSEEN","WALLFLOWERS","THE MEEK","READ-ONLY","GREEN DOTS","TYPING…","THE 95%"];
+const nameEl=document.getElementById('names');
+let ni=0;
+setInterval(()=>{
+  nameEl.classList.add('swap');
+  setTimeout(()=>{
+    ni=(ni+1)%NAMES.length;
+    nameEl.textContent=NAMES[ni];
+    nameEl.classList.remove('swap');
+  },360);
+},2200);
+
+/* edge lurkers — real hand-drawn watchers half-hidden at the frame */
+const edges=[
+  {src:'art/lurker-cyan.svg',    css:{left:'-84px',  top:'16%', transform:'rotate(-13deg)'}},
+  {src:'art/lurker-magenta.svg', css:{right:'-92px', top:'48%', transform:'rotate(11deg)'}},
+  {src:'art/lurker-white.svg',   css:{left:'-78px',  top:'72%', transform:'rotate(9deg)'}},
+  {src:'art/lurker-red.svg',     css:{right:'-88px', top:'88%', transform:'rotate(-8deg)'}}
+];
+for(const e of edges){
+  const d=document.createElement('div'); d.className='edge';
+  Object.assign(d.style,e.css);
+  d.innerHTML=`<img src="${e.src}" alt="">`;
+  document.body.appendChild(d);
+}
+
+/* mint shell — wires to the contract when it exists */
+document.getElementById('connect').onclick=async()=>{
+  if(window.ethereum){
+    try{ await window.ethereum.request({method:'eth_requestAccounts'});
+      document.getElementById('connect').textContent='CONNECTED — MINT SEALED'; }
+    catch(e){}
+  } else {
+    document.getElementById('connect').textContent='NO WALLET FOUND — KEEP LURKING';
+  }
+};
+</script>
+</body>
+</html>

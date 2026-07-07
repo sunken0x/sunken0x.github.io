@@ -25,6 +25,11 @@ const btc = [
 const tez = [
   { slug: 'tezos-editions',   name: 'Tezos Editions',   note: 'The Green Quarter · objkt' },
 ];
+const groups = [
+  { label: 'Ethereum', items: eth },
+  { label: 'Bitcoin Ordinals', items: btc },
+  { label: 'Tezos', items: tez },
+];
 const profiles = [
   { name: 'SuperRare',  href: 'https://superrare.com/sunken0x' },
   { name: 'Manifold',   href: 'https://manifold.xyz/@sunken0x' },
@@ -38,108 +43,108 @@ const profiles = [
 <BaseLayout title="sunken0x">
   <Header />
 
-  <main class="tree">
-    <div class="intro">
-      <h1>sunken0x</h1>
-      <p class="tag">Glitch-native, generative, fully on-chain — across Ethereum, Bitcoin Ordinals & Tezos.</p>
+  <main class="home">
+    <aside class="side">
+      <div class="side-in">
+        <h1>sunken0x</h1>
+        <p class="tag">Glitch-native, generative, fully on-chain — across Ethereum, Bitcoin Ordinals & Tezos.</p>
+        <div class="feature">
+          <video src="/art/feature.mp4" poster="/art/feature-poster.png" autoplay loop muted playsinline></video>
+        </div>
+      </div>
+    </aside>
+
+    <div class="list">
+      {groups.map((g) => (
+        <section class="group">
+          <p class="ghead"><span>{g.label}</span></p>
+          {g.items.map((c) => (
+            <a class="row art" href={`/${c.slug}`}>
+              <span class="rname">{c.name}</span>
+              <span class="rnote">{c.note}</span>
+              <span class="rarr">→</span>
+            </a>
+          ))}
+        </section>
+      ))}
+
+      <section class="group">
+        <p class="ghead"><span>Profiles</span></p>
+        {profiles.map((p) => (
+          <a class="row prow" href={p.href} target="_blank" rel="noopener">
+            <span class="rname">{p.name}</span>
+            <span class="rarr">↗</span>
+          </a>
+        ))}
+      </section>
     </div>
-
-    <section class="group">
-      <p class="ghead"><span>Ethereum</span></p>
-      {eth.map((c) => (
-        <a class="row" href={`/${c.slug}`}>
-          <span class="rname">{c.name}</span>
-          <span class="rnote">{c.note}</span>
-          <span class="rarr">→</span>
-        </a>
-      ))}
-    </section>
-
-    <section class="group">
-      <p class="ghead"><span>Bitcoin Ordinals</span></p>
-      {btc.map((c) => (
-        <a class="row" href={`/${c.slug}`}>
-          <span class="rname">{c.name}</span>
-          <span class="rnote">{c.note}</span>
-          <span class="rarr">→</span>
-        </a>
-      ))}
-    </section>
-
-    <section class="group">
-      <p class="ghead"><span>Tezos</span></p>
-      {tez.map((c) => (
-        <a class="row" href={`/${c.slug}`}>
-          <span class="rname">{c.name}</span>
-          <span class="rnote">{c.note}</span>
-          <span class="rarr">→</span>
-        </a>
-      ))}
-    </section>
-
-    <section class="group">
-      <p class="ghead"><span>Profiles</span></p>
-      {profiles.map((p) => (
-        <a class="row prow" href={p.href} target="_blank" rel="noopener">
-          <span class="rname">{p.name}</span>
-          <span class="rarr">↗</span>
-        </a>
-      ))}
-    </section>
   </main>
 
   <Footer />
 </BaseLayout>
 
+<script>
+  const v = document.querySelector('.feature video');
+  if (v) { v.muted = true; const go = () => v.play().catch(() => {}); v.addEventListener('canplay', go); go(); }
+</script>
+
 <style>
-  .tree { max-width: 640px; margin: 0 auto; padding: 60px 22px 40px; }
+  :root{ --teal:#2ce1f5; }
 
-  .intro { text-align: center; margin-bottom: 46px; }
-  .intro h1 {
+  .home {
+    max-width: 1140px; margin: 0 auto; padding: 44px 24px 40px;
+    display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start;
+  }
+
+  /* ---- left: intro + featured art ---- */
+  .side-in { position: sticky; top: 40px; }
+  .side h1 {
     font-family: var(--font-display);
-    font-size: clamp(52px, 12vw, 92px);
-    color: var(--fg);
-    line-height: 1;
-    letter-spacing: 0.01em;
-    margin: 0;
+    font-size: clamp(46px, 6vw, 76px); color: var(--fg); line-height: 1; margin: 0; letter-spacing: 0.01em;
   }
-  .intro .tag {
-    max-width: 42ch; margin: 16px auto 0;
-    font-size: 13px; line-height: 1.7; color: var(--fg-muted); letter-spacing: 0.02em;
-  }
+  .side .tag { max-width: 34ch; margin: 16px 0 26px; font-size: 13px; line-height: 1.7; color: var(--fg-muted); }
+  .feature { border: 1px solid var(--border); line-height: 0; background: var(--bg-deep); }
+  .feature video { width: 100%; display: block; }
 
-  .group { margin-bottom: 34px; }
+  /* ---- right: the link tree ---- */
+  .group { margin-bottom: 30px; }
+  .group:last-child { margin-bottom: 0; }
   .ghead {
-    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--fg-muted); margin: 0 0 12px; padding-left: 4px;
-    display: flex; align-items: center; gap: 12px;
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--fg-muted);
+    margin: 0 0 12px; padding-left: 2px; display: flex; align-items: center; gap: 12px;
   }
   .ghead::after { content: ''; flex: 1; height: 1px; background: var(--border-faint); }
 
   .row {
-    display: grid;
-    grid-template-columns: 1fr auto 22px;
-    align-items: baseline;
-    gap: 16px;
-    padding: 18px 18px;
-    margin-bottom: 8px;
-    border: 1px solid var(--border-faint);
-    text-decoration: none;
-    color: var(--fg);
+    display: grid; grid-template-columns: 1fr auto 20px; align-items: baseline; gap: 16px;
+    padding: 17px 18px; margin-bottom: 8px;
+    border: 1px solid var(--border-faint); text-decoration: none; color: var(--fg);
     transition: border-color 0.15s, background 0.15s, transform 0.12s;
   }
-  .row:hover { border-color: var(--fg-muted); background: var(--bg-elev); transform: translateY(-2px); }
-  .row:hover .rarr { color: var(--fg); }
+  .row:hover { background: var(--bg-elev); transform: translateY(-2px); }
 
-  .rname { font-family: var(--font-display); font-size: 21px; line-height: 1.1; color: var(--fg); }
-  .rnote { font-size: 11px; letter-spacing: 0.06em; color: var(--fg-muted); text-align: right; white-space: nowrap; }
-  .rarr { color: var(--fg-faint); text-align: right; transition: color 0.15s; }
+  .rname { font-family: var(--font-display); font-size: 20px; line-height: 1.1; color: var(--fg); }
+  .rnote { font-size: 11px; letter-spacing: 0.05em; color: var(--fg-muted); text-align: right; white-space: nowrap; }
+  .rarr { text-align: right; transition: color 0.15s; }
 
-  /* profile rows: name + arrow only */
-  .prow { grid-template-columns: 1fr 22px; }
+  /* teal accent for the ART rows (collections) */
+  .row.art { border-left: 2px solid var(--teal); }
+  .row.art .rarr { color: var(--teal); }
+  .row.art:hover { border-color: var(--teal); }
 
+  /* profiles: muted, name + arrow only */
+  .prow { grid-template-columns: 1fr 20px; }
+  .prow .rarr { color: var(--fg-faint); }
+  .prow:hover { border-color: var(--fg-muted); }
+  .prow:hover .rarr { color: var(--fg); }
+
+  @media (max-width: 820px) {
+    .home { grid-template-columns: 1fr; gap: 34px; }
+    .side-in { position: static; }
+    .feature { max-width: 460px; }
+  }
   @media (max-width: 520px) {
-    .row { grid-template-columns: 1fr 20px; }
+    .row { grid-template-columns: 1fr 18px; }
     .row .rnote { grid-column: 1 / -1; text-align: left; margin-top: 2px; }
   }
 </style>

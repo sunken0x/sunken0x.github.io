@@ -68,6 +68,11 @@
   /* mint */
   .mintbox{ border:1px solid var(--dimmer); padding:44px; text-align:center;}
   .mintbox .status{ font-size:10px; letter-spacing:.35em; color:var(--dim); margin-bottom:20px;}
+  .steps{ display:flex; flex-direction:column; gap:22px; margin:30px 0 6px; text-align:left; max-width:520px; margin-left:auto; margin-right:auto;}
+  .step{ display:flex; gap:18px; align-items:flex-start;}
+  .step .num{ font-size:11px; letter-spacing:.2em; color:var(--dim); padding-top:4px; min-width:24px;}
+  .step .stitle{ font-size:16px; color:#e8f2e8; margin:0;}
+  .step .sdesc{ font-size:12px; color:var(--dim); margin:4px 0 12px; letter-spacing:.03em;}
   .mintbox .big{ margin-bottom:8px;}
   .bar{ height:6px; background:var(--dimmer); margin:30px 0 10px; position:relative;}
   .bar i{ position:absolute; inset:0 auto 0 0; width:0%; background:#e8f2e8;}
@@ -144,14 +149,30 @@
 </section>
 
 <section id="mint">
-  <h2>MINT</h2>
+  <h2>THE LIST</h2>
   <div class="mintbox">
-    <div class="status">STATUS: SEALED — THE CABAL IS ASSEMBLING</div>
-    <p class="big">Minting opens when enough of us are watching.</p>
-    <div class="mrow"><div>SUPPLY <b>333</b></div><div>PRICE <b>TBA</b></div><div>CHAIN <b>ETHEREUM</b></div></div>
-    <div class="bar"><i id="mintbar"></i></div>
-    <div class="quiet"><span id="mintcount">0</span> / 333 CLAIMED</div>
-    <div style="margin-top:34px"><button class="btn" id="connect">CONNECT WALLET</button></div>
+    <div class="status">333 · FULLY ON-CHAIN · ETHEREUM</div>
+    <p class="big">Getting on the list takes two moves. Both quiet.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01</span>
+        <div>
+          <p class="stitle">Drop your wallet.</p>
+          <p class="sdesc">Held a lurker before? You're already counted.</p>
+          <!-- swap __FORM__ with the Google Form link -->
+          <a class="btn" href="__FORM__" target="_blank" rel="noopener">DROP WALLET →</a>
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <div>
+          <p class="stitle">Say nothing.</p>
+          <p class="sdesc">Go to the post and comment 👁 — that's all.</p>
+          <!-- swap __POST__ with the launch tweet link -->
+          <a class="btn" href="__POST__" target="_blank" rel="noopener">THE POST →</a>
+        </div>
+      </div>
+    </div>
     <p class="mid quiet" style="margin-top:26px">Follow quietly. You will know.</p>
   </div>
 </section>

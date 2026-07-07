@@ -28,7 +28,7 @@
   --brine:      #22355c;
 
   /* type stack — grotesk display, mono for UI voice */
-  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Beccaria", "Times New Roman", Georgia, serif;
   --font-body:    "SF Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-mono:    "SF Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
 

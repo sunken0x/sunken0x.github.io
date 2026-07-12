@@ -35,6 +35,8 @@
   .btn{ display:inline-block; border:1px solid #e8f2e8; color:#e8f2e8; padding:14px 30px;
     font:600 11px/1 "SF Mono",Menlo,monospace; letter-spacing:.25em; cursor:pointer; background:transparent;}
   .btn:hover{ background:#e8f2e8; color:var(--bg);}
+  .btn.soon{ opacity:.45; cursor:default; display:inline-block;}
+  .btn.soon:hover{ background:transparent; color:#e8f2e8;}
 
   h2{ font-size:12px; letter-spacing:.35em; color:var(--dim); margin-bottom:34px; font-weight:600;}
   p.big{ font-size:clamp(17px,2.6vw,24px); line-height:1.75; color:#e8f2e8;}
@@ -159,8 +161,7 @@
         <div>
           <p class="stitle">Drop your wallet.</p>
           <p class="sdesc">Held a lurker before? You're already counted.</p>
-          <!-- swap __FORM__ with the Google Form link -->
-          <a class="btn" href="__FORM__" target="_blank" rel="noopener">DROP WALLET →</a>
+          <span class="btn soon">DROP WALLET · SOON</span>
         </div>
       </div>
       <div class="step">
@@ -168,8 +169,7 @@
         <div>
           <p class="stitle">Say nothing.</p>
           <p class="sdesc">Go to the post and comment 👁 — that's all.</p>
-          <!-- swap __POST__ with the launch tweet link -->
-          <a class="btn" href="__POST__" target="_blank" rel="noopener">THE POST →</a>
+          <span class="btn soon">THE POST · SOON</span>
         </div>
       </div>
     </div>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LURKERS — the many</title>
+<style>
+  @font-face{ font-family:'HitMePunk'; src:url('../fonts/hmp-01.ttf') format('truetype'); }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;background:#000B25;overflow:hidden;}
+  body{ font-family:"SF Mono",Menlo,monospace; color:#e8f2e8; }
+
+  .wall{ position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; gap:14px; }
+  .row{ display:flex; gap:14px; width:max-content; will-change:transform; }
+  .row.l{ animation:scrollL var(--dur,60s) linear infinite; }
+  .row.r{ animation:scrollR var(--dur,60s) linear infinite; }
+  @keyframes scrollL{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes scrollR{ from{transform:translateX(-50%)} to{transform:translateX(0)} }
+  .tile{ width:var(--tile,190px); height:var(--tile,190px); flex:0 0 auto; background:#02102e; border:1px solid #14284d; }
+  .tile img{ width:100%; height:100%; display:block; }
+
+  /* center overlay */
+  .veil{ position:fixed; inset:0; z-index:2; pointer-events:none;
+    background:radial-gradient(ellipse 60% 55% at 50% 50%, rgba(0,11,37,.92) 0%, rgba(0,11,37,.72) 45%, rgba(0,11,37,.15) 100%); }
+  .center{ position:fixed; inset:0; z-index:3; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; pointer-events:none; }
+  .center h1{ font-family:'HitMePunk',monospace; font-size:clamp(56px,13vw,180px); letter-spacing:.06em; color:#fff; line-height:1; text-shadow:0 6px 40px rgba(0,11,37,.9); }
+  .center .sub{ margin-top:16px; font-size:clamp(11px,1.6vw,15px); letter-spacing:.35em; color:#e8f2e8; }
+  .center .sub2{ margin-top:8px; font-size:11px; letter-spacing:.3em; color:#4d6a8f; }
+</style>
+</head>
+<body>
+  <div class="wall" id="wall"></div>
+  <div class="veil"></div>
+  <div class="center">
+    <h1>LURKERS</h1>
+    <div class="sub">WE ARE THE MANY</div>
+    <div class="sub2">333 · HAND-DRAWN · FULLY ON-CHAIN</div>
+  </div>
+
+<script>
+(async () => {
+  const wall = document.getElementById('wall');
+  let tiles = [];
+  try { tiles = await (await fetch('tiles.json')).json(); } catch(e){}
+  if (!tiles.length) return;
+
+  // shuffle helper (varies every load)
+  const shuffled = () => tiles.map(t=>t).sort(()=>Math.random()-0.5);
+
+  const ROWS = 5;
+  for (let r = 0; r < ROWS; r++) {
+    const row = document.createElement('div');
+    row.className = 'row ' + (r % 2 ? 'r' : 'l');
+    row.style.setProperty('--dur', (52 + r*9) + 's');   // varied speeds
+    // enough tiles to overflow, then duplicate the block for a seamless loop
+    let block = '';
+    const set = shuffled();
+    // repeat the set until it's wide enough, then double it
+    let reps = Math.max(2, Math.ceil(28 / set.length));
+    for (let k = 0; k < reps; k++)
+      for (const t of set) block += `<div class="tile"><img src="tiles/${t}" loading="lazy" alt=""></div>`;
+    row.innerHTML = block + block;   // doubled → 50% translate loops seamlessly
+    wall.appendChild(row);
+  }
+})();
+</script>
+</body>
+</html>

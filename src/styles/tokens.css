@@ -1,36 +1,36 @@
 :root {
-  /* flat deep navy — the lurkers language. #000B25 from the hand-drawn originals */
-  --bg-sig:     #000B25;
-  --bg-surface: #000B25;
-  --bg-upper:   #000B25;
-  --bg-mid:     #000B25;
-  --bg-lower:   #000B25;
-  --bg-deep:    #000817;
-  --bg-elev:    #02102e;      /* specimen card, barely lifted */
-  --bg-card:    #041333;
+  /* warm paper gallery — the audio-maps light style (#efece4) */
+  --bg-sig:     #efece4;
+  --bg-surface: #efece4;
+  --bg-upper:   #efece4;
+  --bg-mid:     #efece4;
+  --bg-lower:   #efece4;
+  --bg-deep:    #e7e3d9;
+  --bg-elev:    #ffffff;      /* cards lift to white */
+  --bg-card:    #ffffff;
 
   /* hairline borders */
-  --border:     #22355c;
-  --border-faint: #142647;
+  --border:       rgba(22, 22, 29, 0.14);
+  --border-faint: rgba(22, 22, 29, 0.08);
 
-  /* text — white on navy, dims for chrome */
-  --fg:         #e8f2e8;
-  --fg-warm:    #cfe3cf;
-  --fg-muted:   #4d6a8f;
-  --fg-faint:   #2e4468;
+  /* text — ink on paper */
+  --fg:        #16161d;
+  --fg-warm:   #2a2a30;
+  --fg-muted:  #6d6b62;
+  --fg-faint:  #a9a79d;
 
   /* accents — monochrome UI; the art carries all colour */
-  --lume:       #e8f2e8;
-  --lume-dim:   #4d6a8f;
-  --flare:      #e8f2e8;
-  --flare-dim:  #4d6a8f;
-  --rust:       #4d6a8f;
-  --brine:      #22355c;
+  --lume:      #16161d;
+  --lume-dim:  #6d6b62;
+  --flare:     #16161d;
+  --flare-dim: #6d6b62;
+  --rust:      #6d6b62;
+  --brine:     rgba(22, 22, 29, 0.14);
 
-  /* type stack — grotesk display, mono for UI voice */
-  --font-display: "Beccaria", "Times New Roman", Georgia, serif;
-  --font-body:    "SF Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  --font-mono:    "SF Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  /* type stack — Syncopate (futuristic display) over plain system mono */
+  --font-display: "Syncopate", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body:    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --font-mono:    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 
   /* motion */
   --ease-sink: cubic-bezier(0.33, 0, 0.15, 1);
@@ -55,10 +55,10 @@ body {
   position: relative;
 }
 
-/* scrollbar — quiet */
+/* scrollbar — quiet, light */
 ::-webkit-scrollbar { width: 10px; background: var(--bg-deep); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
 
-/* selection */
+/* selection — ink on paper inverted */
 ::selection { background: var(--fg); color: var(--bg-sig); }

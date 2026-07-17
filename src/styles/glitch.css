@@ -1,6 +1,5 @@
 /* ===== Fonts ===== */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
-@font-face{ font-family:'Beccaria'; src:url('/fonts/Beccaria.ttf') format('truetype'); font-display:swap; }
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
 
 /* ===== Typography primitives ===== */
 .display {
@@ -15,6 +14,14 @@
 .display-dense {
   font-weight: 700;
   letter-spacing: -0.03em;
+}
+
+/* the 0 in sunken0x — Syncopate's zero reads as an 'o', so render it in mono */
+.hexzero {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.88em;
+  letter-spacing: 0;
 }
 
 .editorial {

@@ -1,5 +1,5 @@
 /* ===== Fonts ===== */
-@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Quantico:wght@400;700&family=Iceland&display=swap');
 
 /* ===== Typography primitives ===== */
 .display {
@@ -16,12 +16,9 @@
   letter-spacing: -0.03em;
 }
 
-/* the 0 in sunken0x — Syncopate's zero reads as an 'o', so render it in mono */
+/* the 0 in sunken0x — Orbitron/Quantico/Iceland have a clear native zero, so inherit the display font */
 .hexzero {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 0.88em;
-  letter-spacing: 0;
+  font-family: inherit;
 }
 
 .editorial {
